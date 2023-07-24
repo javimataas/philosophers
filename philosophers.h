@@ -6,7 +6,7 @@
 /*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:08:38 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/24 18:58:15 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:41:50 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,30 @@ typedef struct s_table
 	int				eat_reps;
 }	t_table;
 
+typedef struct s_philo
+{
+	pthread_t		philo_thread;
+	pthread_mutex_t	last_eat_mutex;
+	pthread_mutex_t	eat_count_mutex;
+	int				first_fork;
+	int				second_fork;
+	int				id;
+	int				eat_count;
+	int				last_eat;
+	t_table			*table;
+}	t_philo;
+
 // UTILS.C
 int		ft_atoi(char *str, t_table *table);
 void	ft_exit_error(int n, int *alive);
 void	ft_print_table(t_table *table);
+void	ft_print_philos(t_philo **philos, t_table *table);
 
 // INIT_DATA.C
 void	ft_init_table(t_table *table, int argc, char **argv);
+t_philo	**ft_init_philos(t_table *table);
+
+// CLEAN_DATA.C
+void	ft_clean_data(t_table *table, t_philo **philos);
 
 #endif

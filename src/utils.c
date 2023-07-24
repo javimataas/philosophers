@@ -6,7 +6,7 @@
 /*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:18:51 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/24 18:57:29 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:37:08 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,21 @@ void	ft_print_table(t_table *table)
 		printf("eat_reps: %d\n", table->eat_reps);
 	else
 		printf("eat_reps: null\n");
+}
+
+void	ft_print_philos(t_philo **philos, t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->number_of_philosophers)
+	{
+		printf("id: %d\n", philos[i]->id);
+		printf("last_meal: %d\n", philos[i]->last_eat);
+		printf("eat_count: %d\n", philos[i]->eat_count);
+		printf("first_fork: %d\n", philos[i]->first_fork);
+		printf("second_fork: %d\n", philos[i]->second_fork);
+		printf("table: %p\n", philos[i]->table);
+		i++;
+	}
 }
