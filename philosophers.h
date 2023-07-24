@@ -6,7 +6,7 @@
 /*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:08:38 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/24 19:41:50 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:55:56 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum e_datatype
 typedef struct s_table
 {
 	pthread_mutex_t	table_mutex;
+	pthread_mutex_t	alive_mutex;
 	pthread_mutex_t	*forks;
 	int				alive;
 	int				number_of_philosophers;
@@ -68,5 +69,8 @@ t_philo	**ft_init_philos(t_table *table);
 
 // CLEAN_DATA.C
 void	ft_clean_data(t_table *table, t_philo **philos);
+
+// ALIVE.C
+int		ft_should_continue(t_table *table);
 
 #endif
