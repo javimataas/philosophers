@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/20 18:02:47 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/20 18:52:18 by jmatas-p         ###   ########.fr       */
+/*   Created: 2023/07/24 18:50:21 by jmatas-p          #+#    #+#             */
+/*   Updated: 2023/07/24 18:57:21 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../philosophers.h"
 
-void	ft_leaks(void)
+void	ft_set_forks(t_table *table)
 {
-	system("leaks -q philo");
+	int	i;
+
+	i = 0;
+	while (i < table->number_of_philosophers)
+	{
+		if (pthread_mutex_init(&table->forks[i], NULL))
+			ft_exit_error(ERR_MEMORY, &table->alive);
+		i++;
+	}
 }
 
 void	ft_init_table(t_table *table, int argc, char **argv)
@@ -30,32 +38,11 @@ void	ft_init_table(t_table *table, int argc, char **argv)
 		table->eat_reps = ft_atoi(argv[5], table);
 	else
 		table->eat_reps = -1;
-}
-
-void	ft_print_table(t_table *table)
-{
-	printf("number_of_philosophers: %d\n", table->number_of_philosophers);
-	printf("time_to_die: %d\n", table->time_to_die);
-	printf("time_to_eat: %d\n", table->time_to_eat);
-	printf("time_to_sleep: %d\n", table->time_to_sleep);
-	if (table->eat_reps != -1)
-		printf("eat_reps: %d\n", table->eat_reps);
-	else
-		printf("eat_reps: null\n");
-}
-
-int	main(int argc, char **argv)
-{
-	t_table	table;
-
-	atexit(ft_leaks);
-	table.alive = 1;
-	if (argc == 5 || argc == 6)
-	{
-		ft_init_table(&table, argc, argv);
-		ft_print_table(&table);
-	}
-	else
-		ft_exit_error(ERR_ARGC, &table.alive);
-	return (0);
+	if (pthread_mutex_init(&table->table_mutex, NULL))
+		ft_exit_error(ERR_MEMORY, &table->alive);
+	table->forks = malloc(sizeof(pthread_mutex_t)
+			* table->number_of_philosophers);
+	if (!table->forks)
+		ft_exit_error(ERR_MEMORY, &table->alive);
+	ft_set_forks(table);
 }

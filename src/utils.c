@@ -6,11 +6,11 @@
 /*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:18:51 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/20 18:43:50 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/07/24 18:57:29 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../philosophers.h"
 
 void	ft_exit_error(int n, int *alive)
 {
@@ -24,6 +24,8 @@ void	ft_exit_error(int n, int *alive)
 		printf("Error, the arguments received must be in the range of 'int'\n");
 	if (n == ERR_NAN)
 		printf("Error, the program must receive numbers\n");
+	if (n == ERR_MEMORY)
+		printf("Error, memory allocation / mutex init failed\n");
 	*alive = 0;
 }
 
@@ -47,4 +49,16 @@ int	ft_atoi(char *str, t_table *table)
 	if (nbr > INT_MAX || nbr < INT_MIN)
 		ft_exit_error(ERR_INT_RANGE, &table->alive);
 	return (nbr);
+}
+
+void	ft_print_table(t_table *table)
+{
+	printf("number_of_philosophers: %d\n", table->number_of_philosophers);
+	printf("time_to_die: %d\n", table->time_to_die);
+	printf("time_to_eat: %d\n", table->time_to_eat);
+	printf("time_to_sleep: %d\n", table->time_to_sleep);
+	if (table->eat_reps != -1)
+		printf("eat_reps: %d\n", table->eat_reps);
+	else
+		printf("eat_reps: null\n");
 }

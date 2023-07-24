@@ -6,14 +6,14 @@
 #    By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 18:11:17 by jmatas-p          #+#    #+#              #
-#    Updated: 2023/07/20 18:19:07 by jmatas-p         ###   ########.fr        #
+#    Updated: 2023/07/24 18:58:31 by jmatas-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -pthread
 
-SRC =   main.c utils.c
+SRC =   src/main.c src/utils.c src/init_data.c
 			
 OBJ = $(SRC:.c=.o)
 
