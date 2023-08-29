@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:18:51 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/24 19:37:08 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:42:20 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_exit_error(int n, int *alive)
 		printf("Error, the program must receive numbers\n");
 	if (n == ERR_MEMORY)
 		printf("Error, memory allocation / mutex init failed\n");
+	if (n == ERR_PTHREAD)
+		printf("Error, wrong thread creation\n");
 	*alive = 0;
 }
 
@@ -51,31 +53,28 @@ int	ft_atoi(char *str, t_table *table)
 	return (nbr);
 }
 
-void	ft_print_table(t_table *table)
+void	ft_print_philo_status(t_philo *philo, int status)
 {
-	printf("number_of_philosophers: %d\n", table->number_of_philosophers);
-	printf("time_to_die: %d\n", table->time_to_die);
-	printf("time_to_eat: %d\n", table->time_to_eat);
-	printf("time_to_sleep: %d\n", table->time_to_sleep);
-	if (table->eat_reps != -1)
-		printf("eat_reps: %d\n", table->eat_reps);
-	else
-		printf("eat_reps: null\n");
-}
-
-void	ft_print_philos(t_philo **philos, t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->number_of_philosophers)
+	pthread_mutex_lock(&philo->table->table_mutex);
+	if (status == DEAD)
+		printf("%lld %d %s\n", ft_get_cur_time(philo->table),
+			philo->id, "has died");
+	if (!ft_should_continue(philo->table))
 	{
-		printf("id: %d\n", philos[i]->id);
-		printf("last_meal: %d\n", philos[i]->last_eat);
-		printf("eat_count: %d\n", philos[i]->eat_count);
-		printf("first_fork: %d\n", philos[i]->first_fork);
-		printf("second_fork: %d\n", philos[i]->second_fork);
-		printf("table: %p\n", philos[i]->table);
-		i++;
+		pthread_mutex_unlock(&philo->table->table_mutex);
+		return ;
 	}
+	if (status == STARTING)
+		printf("%lld %d %s\n", ft_get_cur_time(philo->table), philo->id,
+			"has taken a fork");
+	if (status == EATING)
+		printf("%lld %d %s\n", ft_get_cur_time(philo->table), philo->id,
+			"is eating");
+	if (status == SLEEPING)
+		printf("%lld %d %s\n", ft_get_cur_time(philo->table), philo->id,
+			"is sleeping");
+	if (status == THINKING)
+		printf("%lld %d %s\n", ft_get_cur_time(philo->table), philo->id,
+			"is thinking");
+	pthread_mutex_unlock(&philo->table->table_mutex);
 }

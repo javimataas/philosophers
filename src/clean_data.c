@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_data.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 19:37:46 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/24 19:42:49 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:57:07 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_free_table(t_table *table)
 void	ft_clean_data(t_table *table, t_philo **philos)
 {
 	usleep(100000);
-	//ft_join_philos(philos, table);
+	ft_join_philos(philos, table);
 	ft_free_philos(philos);
 	ft_free_table(table);
 }

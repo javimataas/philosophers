@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:08:38 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/24 19:55:56 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:37:20 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,24 @@
 # include <pthread.h>
 # include <limits.h>
 
-enum e_datatype
+enum e_errors
 {
 	ERR_PHILO_NUM,
 	ERR_ARGC,
 	ERR_INT_RANGE,
 	ERR_NAN,
 	ERR_MEMORY,
-	ERR_FORK_INIT
+	ERR_FORK_INIT,
+	ERR_PTHREAD
+};
+
+enum e_states
+{
+	STARTING,
+	THINKING,
+	SLEEPING,
+	EATING,
+	DEAD
 };
 
 typedef struct s_table
@@ -38,9 +48,10 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	int				alive;
 	int				number_of_philosophers;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	long long		start_time;
+	long long		time_to_die;
+	long long		time_to_eat;
+	long long		time_to_sleep;
 	int				eat_reps;
 }	t_table;
 
@@ -60,8 +71,7 @@ typedef struct s_philo
 // UTILS.C
 int		ft_atoi(char *str, t_table *table);
 void	ft_exit_error(int n, int *alive);
-void	ft_print_table(t_table *table);
-void	ft_print_philos(t_philo **philos, t_table *table);
+void	ft_print_philo_status(t_philo *philo, int status);
 
 // INIT_DATA.C
 void	ft_init_table(t_table *table, int argc, char **argv);
@@ -72,5 +82,15 @@ void	ft_clean_data(t_table *table, t_philo **philos);
 
 // ALIVE.C
 int		ft_should_continue(t_table *table);
+void	ft_start_meal(t_philo **philos, t_table *table);
+void	ft_keep_loop(t_philo **philos);
+
+// TIME.C
+long long   ft_get_init_time(void);
+long long   ft_get_cur_time(t_table *table);
+
+// ROUTINE.C
+void    *ft_philo_start(void *arg);
+void	*ft_one_philo(void *arg);
 
 #endif

@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+         #
+#    By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 18:11:17 by jmatas-p          #+#    #+#              #
-#    Updated: 2023/07/24 19:56:05 by jmatas-p         ###   ########.fr        #
+#    Updated: 2023/08/29 17:51:15 by jmatas-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -pthread
 
-SRC =   src/main.c src/utils.c src/init_data.c src/clean_data.c src/alive.c
+SRC =   src/main.c src/utils.c src/init_data.c src/clean_data.c src/alive.c \
+		src/time.c src/routine.c
 			
 OBJ = $(SRC:.c=.o)
 
