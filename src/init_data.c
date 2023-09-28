@@ -6,7 +6,7 @@
 /*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 18:50:21 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/07/24 19:36:01 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/09/28 20:08:48 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	ft_set_forks(t_table *table)
 {
 	int	i;
 
-	i = 1;
-	while (i < table->number_of_philosophers)
+	i = 0;
+	while (i < table->number_of_philosophers - 1)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL))
 			ft_exit_error(ERR_MEMORY, &table->alive);
@@ -54,8 +54,10 @@ void	ft_init_table(t_table *table, int argc, char **argv)
 		table->eat_reps = -1;
 	if (pthread_mutex_init(&table->table_mutex, NULL))
 		ft_exit_error(ERR_MEMORY, &table->alive);
+	if (pthread_mutex_init(&table->alive_mutex, NULL))
+		ft_exit_error(ERR_MEMORY, &table->alive);
 	table->forks = malloc(sizeof(pthread_mutex_t)
-			* table->number_of_philosophers);
+			* (table->number_of_philosophers));
 	if (!table->forks)
 		ft_exit_error(ERR_MEMORY, &table->alive);
 	ft_set_forks(table);

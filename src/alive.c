@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alive.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 19:55:30 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/08/29 18:40:55 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:51:43 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int	ft_should_continue(t_table *table)
 		return (1);
 	}
 	else
+	{
+		pthread_mutex_unlock(&table->alive_mutex);
 		return (0);
+	}
 }
 
 void	ft_start_meal(t_philo **philos, t_table *table)
@@ -29,24 +32,26 @@ void	ft_start_meal(t_philo **philos, t_table *table)
 	int	c;
 
 	c = 0;
-	table->start_time = (table->number_of_philosophers * 2 * 10) + ft_get_init_time();
+	table->start_time = (table->number_of_philosophers * 2 * 10)
+		+ ft_get_init_time();
 	if (table->number_of_philosophers == 1)
 	{
 		table->start_time = ft_get_init_time();
-		if (pthread_create(&philos[c]->philo_thread, NULL, &ft_one_philo, philos[c]) != 0)
+		if (pthread_create(&philos[c]->philo_thread,
+				NULL, &ft_one_philo, philos[c]) != 0)
 			ft_exit_error(ERR_PTHREAD, &table->alive);
-		return;
+		return ;
 	}
 	while (philos[c])
 	{
 		if (pthread_create(&philos[c]->philo_thread, NULL, &ft_philo_start,
-			philos[c]) != 0)
+				philos[c]) != 0)
 			ft_exit_error(5, &table->alive);
 		c++;
 	}
 }
 
-int		ft_dead_philo(t_philo *philo)
+int	ft_dead_philo(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->last_eat_mutex);
 	if ((ft_get_cur_time(philo->table) - philo->last_eat)
@@ -55,15 +60,15 @@ int		ft_dead_philo(t_philo *philo)
 		pthread_mutex_unlock(&philo->last_eat_mutex);
 		pthread_mutex_lock(&philo->table->alive_mutex);
 		philo->table->alive = 0;
-		ft_print_philo_status(philo, DEAD);
 		pthread_mutex_unlock(&philo->table->alive_mutex);
+		ft_print_philo_status(philo, DEAD);
 		return (1);
 	}
 	pthread_mutex_unlock(&philo->last_eat_mutex);
 	return (0);
 }
 
-int		ft_philo_ok(t_philo **philos)
+int	ft_philo_ok(t_philo **philos)
 {
 	int	i;
 	int	full;
@@ -96,10 +101,6 @@ void	ft_keep_loop(t_philo **philos)
 	while (1)
 	{
 		if (ft_philo_ok(philos))
-		{
-			usleep(1000);
 			break ;
-		}
-		usleep(1000);
 	}
 }

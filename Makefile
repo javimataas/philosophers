@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+         #
+#    By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/20 18:11:17 by jmatas-p          #+#    #+#              #
-#    Updated: 2023/08/29 17:51:15 by jmatas-p         ###   ########.fr        #
+#    Updated: 2023/09/28 19:38:16 by jmatas-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -g -fsanitize=thread -Wall -Wextra -Werror -pthread
 
 SRC =   src/main.c src/utils.c src/init_data.c src/clean_data.c src/alive.c \
 		src/time.c src/routine.c
-			
+
 OBJ = $(SRC:.c=.o)
 
 NAME = philo
@@ -34,7 +34,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "Project cleaned"
+	@echo "$(NAME) cleaned"
 
 re: fclean all
 

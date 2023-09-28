@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:08:38 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/08/29 18:37:20 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:43:00 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,28 @@ typedef struct s_philo
 }	t_philo;
 
 // UTILS.C
-int		ft_atoi(char *str, t_table *table);
-void	ft_exit_error(int n, int *alive);
-void	ft_print_philo_status(t_philo *philo, int status);
+int			ft_atoi(char *str, t_table *table);
+void		ft_exit_error(int n, int *alive);
+void		ft_print_philo_status(t_philo *philo, int status);
 
 // INIT_DATA.C
-void	ft_init_table(t_table *table, int argc, char **argv);
-t_philo	**ft_init_philos(t_table *table);
+void		ft_init_table(t_table *table, int argc, char **argv);
+t_philo		**ft_init_philos(t_table *table);
 
 // CLEAN_DATA.C
-void	ft_clean_data(t_table *table, t_philo **philos);
+void		ft_clean_data(t_table *table, t_philo **philos);
 
 // ALIVE.C
-int		ft_should_continue(t_table *table);
-void	ft_start_meal(t_philo **philos, t_table *table);
-void	ft_keep_loop(t_philo **philos);
+int			ft_should_continue(t_table *table);
+void		ft_start_meal(t_philo **philos, t_table *table);
+void		ft_keep_loop(t_philo **philos);
 
 // TIME.C
-long long   ft_get_init_time(void);
-long long   ft_get_cur_time(t_table *table);
+long long	ft_get_init_time(void);
+long long	ft_get_cur_time(t_table *table);
 
 // ROUTINE.C
-void    *ft_philo_start(void *arg);
-void	*ft_one_philo(void *arg);
+void		*ft_philo_start(void *arg);
+void		*ft_one_philo(void *arg);
 
 #endif

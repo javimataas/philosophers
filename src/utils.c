@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatas-p <jmatas-p@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: jmatas-p <jmatas-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 18:18:51 by jmatas-p          #+#    #+#             */
-/*   Updated: 2023/08/29 18:42:20 by jmatas-p         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:43:46 by jmatas-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_print_philo_status(t_philo *philo, int status)
 	pthread_mutex_lock(&philo->table->table_mutex);
 	if (status == DEAD)
 		printf("%lld %d %s\n", ft_get_cur_time(philo->table),
-			philo->id, "has died");
+			philo->id, "died");
 	if (!ft_should_continue(philo->table))
 	{
 		pthread_mutex_unlock(&philo->table->table_mutex);
